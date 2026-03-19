@@ -140,5 +140,5 @@ Dự án sử dụng giấy phép [MIT](LICENSE).
 ---
 
 <div align="center">
-  Made with ❤️ by <a href="https://github.com/QuoocsCuongwf">QuoocsCuongwf</a>
+  Made with by <a href="https://github.com/QuoocsCuongwf">QuoocsCuongwf</a>
 </div>
