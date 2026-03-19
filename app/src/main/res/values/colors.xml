@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="weather_background_top">#0F2027</color>
+    <color name="weather_background_mid">#2C5364</color>
+    <color name="weather_background_bottom">#6A82FB</color>
+    <color name="weather_card_bg">#CCFFFFFF</color>
+    <color name="weather_text_primary">#1E293B</color>
+    <color name="weather_text_secondary">#475569</color>
+</resources>

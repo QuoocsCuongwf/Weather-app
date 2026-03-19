@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="city_hint">Nhập tên thành phố (ví dụ: Ha Noi)</string>
+    <string name="search_weather">Tìm thời tiết</string>
+    <string name="my_location">Vị trí của tôi</string>
+    <string name="temperature_placeholder">--°C</string>
+    <string name="city_placeholder">--</string>
+    <string name="status_placeholder">--</string>
+    <string name="humidity_format">Độ ẩm: %1$d%%</string>
+    <string name="wind_speed_format">Gió: %1$.1f m/s</string>
+    <string name="temperature_format">%1$.1f°C</string>
+    <string name="short_temperature_format">%1$.0f°</string>
+    <string name="temperature_range_format">%1$.0f° / %2$.0f°</string>
+    <string name="icon_content_description">Biểu tượng thời tiết</string>
+    <string name="hourly_forecast_title">Theo giờ</string>
+    <string name="weekly_forecast_title">7 ngày tới</string>
+    <string name="forecast_description_placeholder">--</string>
+    <string name="error_empty_city">Vui lòng nhập tên thành phố.</string>
+    <string name="error_location_permission_denied">Bạn cần cấp quyền vị trí để dùng tính năng này.</string>
+    <string name="error_location_unavailable">Không lấy được vị trí hiện tại. Vui lòng thử lại.</string>
+    <string name="loading">Đang tải...</string>
+</resources>
