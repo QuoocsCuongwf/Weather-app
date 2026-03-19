@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.weatherapp.ui.DailyForecastAdapter;
 import com.example.weatherapp.ui.HourlyForecastAdapter;
-import com.example.weatherapp.model.WeatherResponse;
+import com.example.weatherapp.model.CurrentWeatherModel;
 import com.example.weatherapp.viewmodel.WeatherViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -37,10 +37,15 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvWeatherStatus;
     private TextView tvHumidity;
     private TextView tvWindSpeed;
+    private TextView tvFeelsLike;
+    private TextView tvUvi;
+    private TextView tvPressure;
+    private TextView tvVisibility;
     private ImageView ivWeatherIcon;
     private ProgressBar progressBar;
     private HourlyForecastAdapter hourlyForecastAdapter;
     private DailyForecastAdapter dailyForecastAdapter;
+    private TextView tvRawJson;
 
     private WeatherViewModel weatherViewModel;
     private FusedLocationProviderClient fusedLocationClient;
@@ -70,8 +75,14 @@ public class MainActivity extends AppCompatActivity {
         tvWeatherStatus = findViewById(R.id.tvWeatherStatus);
         tvHumidity = findViewById(R.id.tvHumidity);
         tvWindSpeed = findViewById(R.id.tvWindSpeed);
+        tvWindSpeed = findViewById(R.id.tvWindSpeed);
+        tvFeelsLike = findViewById(R.id.tvFeelsLike);
+        tvUvi = findViewById(R.id.tvUvi);
+        tvPressure = findViewById(R.id.tvPressure);
+        tvVisibility = findViewById(R.id.tvVisibility);
         ivWeatherIcon = findViewById(R.id.ivWeatherIcon);
         progressBar = findViewById(R.id.progressBar);
+        tvRawJson = findViewById(R.id.tvRawJson);
         RecyclerView rvHourlyForecast = findViewById(R.id.rvHourlyForecast);
         RecyclerView rvDailyForecast = findViewById(R.id.rvDailyForecast);
 
@@ -122,6 +133,9 @@ public class MainActivity extends AppCompatActivity {
         });
         weatherViewModel.getLoadingLiveData().observe(this, isLoading ->
                 progressBar.setVisibility(Boolean.TRUE.equals(isLoading) ? View.VISIBLE : View.GONE)
+        );
+        weatherViewModel.getRawJsonLiveData().observe(this, rawJson ->
+                tvRawJson.setText(rawJson)
         );
     }
 
@@ -180,29 +194,21 @@ public class MainActivity extends AppCompatActivity {
                 );
     }
 
-    private void bindWeatherData(WeatherResponse weatherResponse) {
+    private void bindWeatherData(CurrentWeatherModel weatherResponse) {
         if (weatherResponse == null) {
             return;
         }
 
         tvCityName.setText(weatherResponse.getCityName());
-
-        WeatherResponse.Main main = weatherResponse.getMain();
-        if (main != null) {
-            tvTemperature.setText(getString(R.string.temperature_format, main.getTemperature()));
-            tvHumidity.setText(getString(R.string.humidity_format, main.getHumidity()));
-        }
-
-        WeatherResponse.Wind wind = weatherResponse.getWind();
-        if (wind != null) {
-            tvWindSpeed.setText(getString(R.string.wind_speed_format, wind.getSpeed()));
-        }
-
-        if (weatherResponse.getWeather() != null && !weatherResponse.getWeather().isEmpty()) {
-            WeatherResponse.Weather weather = weatherResponse.getWeather().get(0);
-            tvWeatherStatus.setText(weather.getMain());
-            loadWeatherIcon(weather.getIcon());
-        }
+        tvTemperature.setText(getString(R.string.temperature_format, weatherResponse.getTemperature()));
+        tvHumidity.setText(getString(R.string.humidity_format, weatherResponse.getHumidity()));
+        tvWindSpeed.setText(getString(R.string.wind_speed_format, weatherResponse.getWindSpeed()));
+        tvFeelsLike.setText(getString(R.string.feels_like_format, weatherResponse.getFeelsLike()));
+        tvUvi.setText(getString(R.string.uvi_format, weatherResponse.getUvi()));
+        tvPressure.setText(getString(R.string.pressure_format, weatherResponse.getPressure()));
+        tvVisibility.setText(getString(R.string.visibility_format, weatherResponse.getVisibility()));
+        tvWeatherStatus.setText(weatherResponse.getWeatherStatus());
+        loadWeatherIcon(weatherResponse.getIcon());
     }
 
     private void loadWeatherIcon(String iconCode) {
