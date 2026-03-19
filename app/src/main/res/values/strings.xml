@@ -19,4 +19,10 @@
     <string name="error_location_permission_denied">Bạn cần cấp quyền vị trí để dùng tính năng này.</string>
     <string name="error_location_unavailable">Không lấy được vị trí hiện tại. Vui lòng thử lại.</string>
     <string name="loading">Đang tải...</string>
+    <string name="raw_json_title">Phản hồi API Gốc (JSON)</string>
+    <string name="feels_like_format">Cảm giác: %1$.1f°C</string>
+    <string name="uvi_format">UV: %1$.1f</string>
+    <string name="pressure_format">Áp suất: %1$d hPa</string>
+    <string name="visibility_format">Tầm nhìn: %1$d m</string>
+    <string name="pop_format"><![CDATA[%1$d%%]]></string>
 </resources>

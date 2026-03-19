@@ -1,7 +1,6 @@
 package com.example.weatherapp.network;
 
-import com.example.weatherapp.model.WeatherResponse;
-import com.example.weatherapp.model.ForecastResponse;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -9,26 +8,28 @@ import retrofit2.http.Query;
 
 public interface WeatherApiService {
 
-    @GET("weather")
-    Call<WeatherResponse> getCurrentWeather(
+    @GET("geo/1.0/direct")
+    Call<List<com.example.weatherapp.model.GeocodingResponse>> getGeocodingByCityName(
             @Query("q") String cityName,
-            @Query("appid") String apiKey,
-            @Query("units") String units
+            @Query("limit") int limit,
+            @Query("appid") String apiKey
     );
 
-    @GET("weather")
-    Call<WeatherResponse> getCurrentWeatherByCoordinates(
+    @GET("geo/1.0/reverse")
+    Call<List<com.example.weatherapp.model.GeocodingResponse>> getGeocodingByCoordinates(
+            @Query("lat") double latitude,
+            @Query("lon") double longitude,
+            @Query("limit") int limit,
+            @Query("appid") String apiKey
+    );
+
+    @GET("data/3.0/onecall")
+    Call<com.example.weatherapp.model.OneCallResponse> getOneCallWeather(
             @Query("lat") double latitude,
             @Query("lon") double longitude,
             @Query("appid") String apiKey,
+            @Query("exclude") String exclude,
             @Query("units") String units
-    );
-
-    @GET("forecast")
-    Call<ForecastResponse> getForecastByCoordinates(
-            @Query("lat") double latitude,
-            @Query("lon") double longitude,
-            @Query("appid") String apiKey,
-            @Query("units") String units
+//            @Query("lang") String units
     );
 }

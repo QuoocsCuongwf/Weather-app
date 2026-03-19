@@ -41,6 +41,13 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
         holder.tvHour.setText(item.getTime());
         holder.tvTemp.setText(holder.itemView.getContext().getString(R.string.short_temperature_format, item.getTemperature()));
         bindIcon(holder.ivIcon, item.getIcon());
+        
+        if (item.getPop() > 0) {
+            holder.tvPop.setVisibility(View.VISIBLE);
+            holder.tvPop.setText(holder.itemView.getContext().getString(R.string.pop_format, (int) (item.getPop() * 100)));
+        } else {
+            holder.tvPop.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -63,12 +70,14 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
         private final TextView tvHour;
         private final TextView tvTemp;
         private final ImageView ivIcon;
+        private final TextView tvPop;
 
         HourlyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvHour = itemView.findViewById(R.id.tvHour);
             tvTemp = itemView.findViewById(R.id.tvHourlyTemp);
             ivIcon = itemView.findViewById(R.id.ivHourlyIcon);
+            tvPop = itemView.findViewById(R.id.tvHourlyPop);
         }
     }
 }

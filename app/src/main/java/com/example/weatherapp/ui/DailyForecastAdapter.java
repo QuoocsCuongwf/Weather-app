@@ -48,6 +48,13 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
                 item.getMaxTemperature()
         ));
         bindIcon(holder.ivIcon, item.getIcon());
+
+        if (item.getPop() > 0) {
+            holder.tvPop.setVisibility(View.VISIBLE);
+            holder.tvPop.setText(holder.itemView.getContext().getString(R.string.pop_format, (int) (item.getPop() * 100)));
+        } else {
+            holder.tvPop.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -71,6 +78,7 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
         private final TextView tvDesc;
         private final TextView tvTempRange;
         private final ImageView ivIcon;
+        private final TextView tvPop;
 
         DailyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,6 +86,7 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
             tvDesc = itemView.findViewById(R.id.tvDailyDesc);
             tvTempRange = itemView.findViewById(R.id.tvDailyTempRange);
             ivIcon = itemView.findViewById(R.id.ivDailyIcon);
+            tvPop = itemView.findViewById(R.id.tvDailyPop);
         }
     }
 }

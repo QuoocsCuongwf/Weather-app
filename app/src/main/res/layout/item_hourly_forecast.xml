@@ -31,6 +31,16 @@
             android:contentDescription="@string/icon_content_description" />
 
         <TextView
+            android:id="@+id/tvHourlyPop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="#2196F3"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/tvHourlyTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

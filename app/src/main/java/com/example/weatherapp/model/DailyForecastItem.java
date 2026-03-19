@@ -7,13 +7,15 @@ public class DailyForecastItem {
     private final double maxTemperature;
     private final String icon;
     private final String description;
+    private final double pop;
 
-    public DailyForecastItem(String dayLabel, double minTemperature, double maxTemperature, String icon, String description) {
+    public DailyForecastItem(String dayLabel, double minTemperature, double maxTemperature, String icon, String description, double pop) {
         this.dayLabel = dayLabel;
         this.minTemperature = minTemperature;
         this.maxTemperature = maxTemperature;
         this.icon = icon;
         this.description = description;
+        this.pop = pop;
     }
 
     public String getDayLabel() {
@@ -34,5 +36,9 @@ public class DailyForecastItem {
 
     public String getDescription() {
         return description;
+    }
+
+    public double getPop() {
+        return pop;
     }
 }
