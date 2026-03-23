@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Weather gradient (Dark) -->
+    <color name="weather_background_top">#0B1F2A</color>
+    <color name="weather_background_mid">#124B6B</color>
+    <color name="weather_background_bottom">#0EA5E9</color>
+
+    <!-- App surfaces -->
+    <color name="weather_card_bg">#B30B1F2A</color>
+
+    <!-- Typography -->
+    <color name="weather_text_primary">#FFFFFFFF</color>
+    <color name="weather_text_secondary">#A0A0A0</color>
+    <color name="weather_text_tertiary">#D0D0D0</color>
+
+    <!-- Tabs -->
+    <color name="tab_selected_bg">#26C6DA</color>
+    <color name="tab_unselected_bg">#22FFFFFF</color>
+    <color name="tab_outline">#4DFFFFFF</color>
+
+    <!-- Widget cells (Dark) -->
+    <color name="weather_widget_bg">#24262A</color>
+    <color name="weather_widget_wave_accent">#26C6DA</color>
+
+    <!-- Forecast chart (Dark) -->
+    <color name="weather_chart_line_day">#26C6DA</color>
+    <color name="weather_chart_line_night">#42A5F5</color>
+    <color name="weather_chart_fill">#2200BCD4</color>
+    <color name="weather_chart_grid">#1AFFFFFF</color>
+    <color name="weather_chart_date_text">#B0BEC5</color>
+    <color name="weather_chart_min_text">#B0BEC5</color>
+
+    <!-- Column colors -->
+    <color name="weather_chart_uv">#D32F2F</color>
+    <color name="weather_chart_precipitation">#42A5F5</color>
+    <color name="weather_chart_humidity">#26C6DA</color>
+    <color name="weather_chart_humidity_fill">#3326C6DA</color>
+    <color name="weather_chart_wind">#81C784</color>
+    <color name="weather_chart_air_quality">#4CAF50</color>
+
+    <!-- Compass in wind widget -->
+    <color name="compass_dart_color">#3300BCD4</color>
+
+    <!-- Misc -->
+    <color name="weather_scroll_bg">#22000000</color>
+</resources>

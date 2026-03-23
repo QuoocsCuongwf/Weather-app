@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ShapeAppearance.WeatherApp.Small" parent="ShapeAppearance.Material3.Corner.Small">
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearance.WeatherApp.Medium" parent="ShapeAppearance.Material3.Corner.Medium">
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="ShapeAppearance.WeatherApp.Large" parent="ShapeAppearance.Material3.Corner.Large">
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <style name="Widget.WeatherApp.MaterialCard" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/weather_card_bg</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">3dp</item>
+    </style>
+
+    <style name="Widget.WeatherApp.TonalChipTab" parent="Widget.Material3.Chip.Assist">
+        <item name="chipBackgroundColor">@color/tab_unselected_bg</item>
+        <item name="chipMinHeight">36dp</item>
+        <item name="chipCornerRadius">18dp</item>
+        <item name="android:textColor">@color/weather_text_secondary</item>
+    </style>
+
+    <style name="Widget.WeatherApp.IconActionButton" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:minWidth">44dp</item>
+        <item name="android:minHeight">44dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">0dp</item>
+        <item name="backgroundTint">@color/tab_unselected_bg</item>
+        <item name="iconTint">@color/weather_text_primary</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.WeatherApp.Small</item>
+    </style>
+
+    <style name="TextAppearance.WeatherApp.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/weather_text_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.WeatherApp.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textColor">@color/weather_text_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.WeatherApp.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/weather_text_primary</item>
+    </style>
+
+    <style name="TextAppearance.WeatherApp.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/weather_text_secondary</item>
+    </style>
+
+    <style name="TextAppearance.WeatherApp.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textColor">@color/weather_text_secondary</item>
+    </style>
+
+</resources>

@@ -3,6 +3,12 @@ package com.example.weatherapp.model;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
+/**
+ * Root response model for the OpenWeatherMap One Call API 3.0.
+ *
+ * <p>Contains nested static classes for each data section:
+ * {@link Current}, {@link Hourly}, {@link Daily}, {@link Minutely}, and {@link Alert}.</p>
+ */
 public class OneCallResponse {
 
     @SerializedName("lat")
@@ -42,6 +48,7 @@ public class OneCallResponse {
     public List<Daily> getDaily() { return daily; }
     public List<Alert> getAlerts() { return alerts; }
 
+    /** Current weather conditions at the requested location. */
     public static class Current {
         @SerializedName("dt")
         private long dt;
@@ -91,6 +98,7 @@ public class OneCallResponse {
         public List<Weather> getWeather() { return weather; }
     }
 
+    /** Minute-by-minute precipitation forecast (where available). */
     public static class Minutely {
         @SerializedName("dt")
         private long dt;
@@ -101,6 +109,7 @@ public class OneCallResponse {
         public double getPrecipitation() { return precipitation; }
     }
 
+    /** Hourly weather forecast entry. */
     public static class Hourly {
         @SerializedName("dt")
         private long dt;
@@ -147,6 +156,7 @@ public class OneCallResponse {
         public double getPop() { return pop; }
     }
 
+    /** Daily weather forecast entry (includes sun/moon data and temperature range). */
     public static class Daily {
         @SerializedName("dt")
         private long dt;
@@ -211,6 +221,7 @@ public class OneCallResponse {
         public double getUvi() { return uvi; }
     }
 
+    /** Temperature values at different times of the day for a {@link Daily} entry. */
     public static class Temp {
         @SerializedName("day")
         private double day;
@@ -233,6 +244,7 @@ public class OneCallResponse {
         public double getMorn() { return morn; }
     }
 
+    /** Feels-like temperature values at different times of the day for a {@link Daily} entry. */
     public static class FeelsLike {
         @SerializedName("day")
         private double day;
@@ -249,6 +261,7 @@ public class OneCallResponse {
         public double getMorn() { return morn; }
     }
 
+    /** Short weather condition descriptor (id, main label, description, and icon code). */
     public static class Weather {
         @SerializedName("id")
         private int id;
@@ -265,6 +278,7 @@ public class OneCallResponse {
         public String getIcon() { return icon; }
     }
 
+    /** Severe weather alert issued by a national/local meteorological agency. */
     public static class Alert {
         @SerializedName("sender_name")
         private String senderName;

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">WeatherApp</string>
     <string name="city_hint">Nhập tên thành phố (ví dụ: Ha Noi)</string>
+    <string name="search_hint">Tìm kiếm thành phố…</string>
     <string name="search_weather">Tìm thời tiết</string>
     <string name="my_location">Vị trí của tôi</string>
     <string name="temperature_placeholder">--°C</string>

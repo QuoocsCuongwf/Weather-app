@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- 1. Precipitation -->
+    <LinearLayout
+        android:id="@+id/tilePrecipitation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="6dp"
+        android:minHeight="128dp"
+        android:gravity="center"
+        android:background="@drawable/bg_weather_widget_square"
+        android:orientation="vertical"
+        android:padding="14dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tileWind"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tileHumidity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Precipitation"
+            android:textColor="@color/weather_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPrecipitationVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="0.0"
+            android:textColor="@color/weather_text_primary"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mm"
+            android:textColor="@color/weather_text_primary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+<!--        <View android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />-->
+<!--        <TextView android:id="@+id/tvPrecipitationDesc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nighttime precipitation" android:textColor="@color/weather_text_secondary" android:textSize="11sp" />-->
+    </LinearLayout>
+
+    <!-- 2. Wind -->
+    <FrameLayout
+        android:id="@+id/tileWind"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="6dp"
+        android:minHeight="128dp"
+        android:background="@drawable/bg_weather_widget_circle"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toEndOf="@id/tilePrecipitation"
+        app:layout_constraintEnd_toStartOf="@id/tileAirQuality"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tileHumidity">
+        
+        <com.example.weatherapp.ui.widget.CompassBackgroundView
+            android:id="@+id/compassBackgroundView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wind"
+                android:textColor="@color/weather_text_secondary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvWindVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="12 km/h"
+                android:textColor="@color/weather_text_primary"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvWindDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Gusts: 26 km/h"
+                android:textColor="@color/weather_text_secondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- 3. Air Quality -->
+    <LinearLayout
+        android:id="@+id/tileAirQuality"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="6dp"
+        android:minHeight="128dp"
+        android:background="@drawable/bg_weather_widget_circle"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="14dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toEndOf="@id/tileWind"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tileHumidity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Air quality"
+            android:textColor="@color/weather_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvAqiVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="46"
+            android:textColor="@color/weather_text_primary"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvAqiDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fair"
+            android:textColor="@color/weather_text_secondary"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- 4. Humidity -->
+    <LinearLayout
+        android:id="@+id/tileHumidity"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="6dp"
+        android:minHeight="128dp"
+        android:background="@drawable/bg_weather_widget_wave"
+        android:orientation="vertical"
+        android:padding="14dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tileUv"
+        app:layout_constraintTop_toBottomOf="@id/tilePrecipitation"
+        app:layout_constraintBottom_toTopOf="@id/tilePressure">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Humidity"
+            android:textColor="@color/weather_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvHumidityVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="78%"
+            android:textColor="@color/weather_text_primary"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvDewPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dew point: 22°"
+            android:textColor="@color/weather_text_primary"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- 5. UV Index -->
+    <LinearLayout
+        android:id="@+id/tileUv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="6dp"
+        android:minHeight="128dp"
+        android:background="@drawable/bg_weather_widget_scalloped"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="14dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toEndOf="@id/tileHumidity"
+        app:layout_constraintEnd_toStartOf="@id/tileVisibility"
+        app:layout_constraintTop_toBottomOf="@id/tilePrecipitation"
+        app:layout_constraintBottom_toTopOf="@id/tilePressure">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UV index"
+            android:textColor="@color/weather_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvUviVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="0"
+            android:textColor="@color/weather_text_primary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvUviDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Low"
+            android:textColor="@color/weather_text_secondary"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- 6. Visibility -->
+    <LinearLayout
+        android:id="@+id/tileVisibility"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="6dp"
+        android:minHeight="128dp"
+        android:background="@drawable/bg_weather_widget_scalloped"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="14dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toEndOf="@id/tileUv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilePrecipitation"
+        app:layout_constraintBottom_toTopOf="@id/tilePressure">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Visibility"
+            android:textColor="@color/weather_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvVisibilityVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="24 km"
+            android:textColor="@color/weather_text_primary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvVisibilityDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Clear"
+            android:textColor="@color/weather_text_secondary"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- 7. Pressure -->
+    <LinearLayout
+        android:id="@+id/tilePressure"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="6dp"
+        android:minHeight="128dp"
+        android:background="@drawable/bg_weather_widget_circle"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="14dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tileSun"
+        app:layout_constraintTop_toBottomOf="@id/tileHumidity"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pressure"
+            android:textColor="@color/weather_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPressureVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="1000"
+            android:textColor="@color/weather_text_primary"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hPa"
+            android:textColor="@color/weather_text_primary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- 8. Sun -->
+    <LinearLayout
+        android:id="@+id/tileSun"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="6dp"
+        android:minHeight="128dp"
+        android:background="@drawable/bg_weather_widget_square"
+        android:orientation="vertical"
+        android:padding="14dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toEndOf="@id/tilePressure"
+        app:layout_constraintEnd_toStartOf="@id/tileMoon"
+        app:layout_constraintTop_toBottomOf="@id/tileHumidity"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Sun"-->
+<!--            android:textColor="@color/weather_text_secondary"-->
+<!--            android:textSize="12sp"-->
+<!--            android:textStyle="bold" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical|center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sunrise"
+                android:textColor="@color/weather_text_secondary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvSunRise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="05:56"
+                android:textColor="@color/weather_text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Sunset"
+                android:textColor="@color/weather_text_secondary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvSunSet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18:04"
+                android:textColor="@color/weather_text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 9. Moon -->
+    <LinearLayout
+        android:id="@+id/tileMoon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="6dp"
+        android:minHeight="128dp"
+        android:background="@drawable/bg_weather_widget_square"
+        android:orientation="vertical"
+        android:padding="14dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toEndOf="@id/tileSun"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tileHumidity"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Moon"-->
+<!--            android:textColor="@color/weather_text_secondary"-->
+<!--            android:textSize="12sp"-->
+<!--            android:textStyle="bold" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical|center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Moonrise"
+                android:textColor="@color/weather_text_secondary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvMoonRise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09:02"
+                android:textColor="@color/weather_text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Moonset"
+                android:textColor="@color/weather_text_secondary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvMoonSet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="22:14"
+                android:textColor="@color/weather_text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+                
+            <!-- <TextView android:id="@+id/tvMoonPhase" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Waxing crescent" android:textColor="@color/weather_text_secondary" android:textSize="9sp" android:gravity="center" android:layout_marginTop="4dp"/> -->
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
