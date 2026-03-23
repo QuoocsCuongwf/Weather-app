@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp" android:height="120dp"
+    android:viewportWidth="120" android:viewportHeight="120">
+    <path
+        android:fillColor="@color/weather_widget_wave_accent"
+        android:pathData="M16,0 h88 a16,16 0 0,1 16,16 v88 a16,16 0 0,1 -16,16 h-88 a16,16 0 0,1 -16,-16 v-88 a16,16 0 0,1 16,-16 z"/>
+    <path
+        android:fillColor="@color/weather_widget_bg"
+        android:pathData="M16,0 h88 a16,16 0 0,1 16,16 v20 Q90,50 60,35 Q30,20 0,35 V16 A16,16 0 0,1 16,0 Z"/>
+</vector>

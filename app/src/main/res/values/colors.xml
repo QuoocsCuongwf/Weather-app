@@ -2,10 +2,48 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="weather_background_top">#0F2027</color>
-    <color name="weather_background_mid">#2C5364</color>
-    <color name="weather_background_bottom">#6A82FB</color>
-    <color name="weather_card_bg">#CCFFFFFF</color>
-    <color name="weather_text_primary">#1E293B</color>
-    <color name="weather_text_secondary">#475569</color>
+
+    <!-- Weather gradient (Light) -->
+    <color name="weather_background_top">#E0F7FA</color>
+    <color name="weather_background_mid">#90CAF9</color>
+    <color name="weather_background_bottom">#42A5F5</color>
+
+    <!-- App surfaces -->
+    <color name="weather_card_bg">#CCCFFFFF</color>
+
+    <!-- Typography -->
+    <color name="weather_text_primary">#00171F</color>
+    <color name="weather_text_secondary">#64748B</color>
+    <color name="weather_text_tertiary">#94A3B8</color>
+
+    <!-- Tabs -->
+    <color name="tab_selected_bg">#00BCD4</color>
+    <color name="tab_unselected_bg">#3300BCD4</color>
+    <color name="tab_outline">#4D00BCD4</color>
+
+    <!-- Widget cells (Light) -->
+    <color name="weather_widget_bg">#E3F2FD</color>
+    <color name="weather_widget_wave_accent">#26C6DA</color>
+
+    <!-- Forecast chart (Light) -->
+    <color name="weather_chart_line_day">#00BCD4</color>
+    <color name="weather_chart_line_night">#42A5F5</color>
+    <color name="weather_chart_fill">#3300BCD4</color>
+    <color name="weather_chart_grid">#1A00171F</color>
+    <color name="weather_chart_date_text">#64748B</color>
+    <color name="weather_chart_min_text">#64748B</color>
+
+    <!-- Column colors -->
+    <color name="weather_chart_uv">#D32F2F</color>
+    <color name="weather_chart_precipitation">#42A5F5</color>
+    <color name="weather_chart_humidity">#26C6DA</color>
+    <color name="weather_chart_humidity_fill">#3326C6DA</color>
+    <color name="weather_chart_wind">#81C784</color>
+    <color name="weather_chart_air_quality">#4CAF50</color>
+
+    <!-- Compass in wind widget -->
+    <color name="compass_dart_color">#3300BCD4</color>
+
+    <!-- Misc -->
+    <color name="weather_scroll_bg">#22000000</color>
 </resources>

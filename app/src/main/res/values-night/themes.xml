@@ -1,7 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.WeatherApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/tab_selected_bg</item>
+        <item name="colorOnPrimary">@color/weather_text_primary</item>
+        <item name="colorSecondary">@color/weather_widget_wave_accent</item>
+        <item name="colorOnSecondary">@color/weather_text_primary</item>
+
+        <item name="colorSurface">@color/weather_card_bg</item>
+        <item name="colorOnSurface">@color/weather_text_primary</item>
+        <item name="colorSurfaceVariant">@color/tab_unselected_bg</item>
+        <item name="colorOnSurfaceVariant">@color/weather_text_secondary</item>
+        <item name="colorOutline">@color/weather_text_tertiary</item>
+
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.WeatherApp.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.WeatherApp.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.WeatherApp.Large</item>
     </style>
 </resources>

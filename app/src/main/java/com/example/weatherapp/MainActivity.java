@@ -2,12 +2,14 @@ package com.example.weatherapp;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,34 +20,63 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.weatherapp.ui.DailyForecastAdapter;
-import com.example.weatherapp.ui.HourlyForecastAdapter;
 import com.example.weatherapp.model.CurrentWeatherModel;
+import com.example.weatherapp.ui.widget.ForecastWidget;
+import com.example.weatherapp.ui.widget.CompassBackgroundView;
 import com.example.weatherapp.viewmodel.WeatherViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+/**
+ * Main screen of the Weather App.
+ *
+ * <p>Handles city search, current-location lookup, and binding all weather
+ * data returned from {@link WeatherViewModel} to the UI.</p>
+ */
 public class MainActivity extends AppCompatActivity {
 
+    // --- Current weather summary ---
     private EditText etCityName;
     private TextView tvCityName;
     private TextView tvTemperature;
     private TextView tvWeatherStatus;
-    private TextView tvHumidity;
-    private TextView tvWindSpeed;
     private TextView tvFeelsLike;
-    private TextView tvUvi;
-    private TextView tvPressure;
-    private TextView tvVisibility;
+    private TextView tvMinMax;
+
+    // --- Weather detail tiles ---
+    private TextView tvPrecipitationVal;
+    private TextView tvWindVal;
+    private TextView tvWindDesc;
+    private TextView tvAqiVal;
+    private TextView tvAqiDesc;
+    private TextView tvHumidityVal;
+    private TextView tvDewPoint;
+    private TextView tvUviVal;
+    private TextView tvUviDesc;
+    private TextView tvVisibilityVal;
+    private TextView tvVisibilityDesc;
+    private TextView tvPressureVal;
+
+    // --- Sun / Moon tiles ---
+    private TextView tvSunRise;
+    private TextView tvSunSet;
+    private TextView tvMoonRise;
+    private TextView tvMoonSet;
+
+    // --- Misc views ---
     private ImageView ivWeatherIcon;
     private ProgressBar progressBar;
-    private HourlyForecastAdapter hourlyForecastAdapter;
-    private DailyForecastAdapter dailyForecastAdapter;
-    private TextView tvRawJson;
+
+    // --- Custom widgets ---
+    private ForecastWidget hourlyForecastWidget;
+    private ForecastWidget dailyForecastWidget;
+    private CompassBackgroundView compassBackgroundView;
 
     private WeatherViewModel weatherViewModel;
     private FusedLocationProviderClient fusedLocationClient;
@@ -61,45 +92,75 @@ public class MainActivity extends AppCompatActivity {
         setupViewModel();
         setupSearchAction();
 
-        // Load default city when app opens first time.
-        etCityName.setText("Ha Noi");
-        requestWeather();
+        // Use the device's current location as the default on startup.
+        requestWeatherByCurrentLocation();
     }
 
+    /**
+     * Clears focus from the city-name input and hides the soft keyboard
+     * whenever the user taps outside the EditText area.
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View focused = getCurrentFocus();
+            if (focused instanceof EditText) {
+                Rect rect = new Rect();
+                focused.getGlobalVisibleRect(rect);
+                if (!rect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    focused.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(focused.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
+    }
+
+    // -------------------------------------------------------------------------
+    // Initialisation
+    // -------------------------------------------------------------------------
+
+    /** Binds all views and sets up button click listeners. */
     private void initViews() {
         etCityName = findViewById(R.id.etCityName);
-        ImageButton btnSearch = findViewById(R.id.btnSearch);
-        ImageButton btnMyLocation = findViewById(R.id.btnMyLocation);
+        android.widget.ImageButton btnMyLocation = findViewById(R.id.btnMyLocation);
+
         tvCityName = findViewById(R.id.tvCityName);
         tvTemperature = findViewById(R.id.tvTemperature);
         tvWeatherStatus = findViewById(R.id.tvWeatherStatus);
-        tvHumidity = findViewById(R.id.tvHumidity);
-        tvWindSpeed = findViewById(R.id.tvWindSpeed);
-        tvWindSpeed = findViewById(R.id.tvWindSpeed);
         tvFeelsLike = findViewById(R.id.tvFeelsLike);
-        tvUvi = findViewById(R.id.tvUvi);
-        tvPressure = findViewById(R.id.tvPressure);
-        tvVisibility = findViewById(R.id.tvVisibility);
+        tvMinMax = findViewById(R.id.tvMinMax);
+
+        tvPrecipitationVal = findViewById(R.id.tvPrecipitationVal);
+        tvWindVal = findViewById(R.id.tvWindVal);
+        tvWindDesc = findViewById(R.id.tvWindDesc);
+        tvAqiVal = findViewById(R.id.tvAqiVal);
+        tvAqiDesc = findViewById(R.id.tvAqiDesc);
+        tvHumidityVal = findViewById(R.id.tvHumidityVal);
+        tvDewPoint = findViewById(R.id.tvDewPoint);
+        tvUviVal = findViewById(R.id.tvUviVal);
+        tvUviDesc = findViewById(R.id.tvUviDesc);
+        tvVisibilityVal = findViewById(R.id.tvVisibilityVal);
+        tvVisibilityDesc = findViewById(R.id.tvVisibilityDesc);
+        tvPressureVal = findViewById(R.id.tvPressureVal);
+
+        tvSunRise = findViewById(R.id.tvSunRise);
+        tvSunSet = findViewById(R.id.tvSunSet);
+        tvMoonRise = findViewById(R.id.tvMoonRise);
+        tvMoonSet = findViewById(R.id.tvMoonSet);
+
         ivWeatherIcon = findViewById(R.id.ivWeatherIcon);
         progressBar = findViewById(R.id.progressBar);
-        tvRawJson = findViewById(R.id.tvRawJson);
-        RecyclerView rvHourlyForecast = findViewById(R.id.rvHourlyForecast);
-        RecyclerView rvDailyForecast = findViewById(R.id.rvDailyForecast);
 
-        hourlyForecastAdapter = new HourlyForecastAdapter();
-        dailyForecastAdapter = new DailyForecastAdapter();
+        hourlyForecastWidget = findViewById(R.id.hourlyForecastWidget);
+        dailyForecastWidget = findViewById(R.id.dailyForecastWidget);
+        compassBackgroundView = findViewById(R.id.compassBackgroundView);
 
-        rvHourlyForecast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvHourlyForecast.setAdapter(hourlyForecastAdapter);
-
-        rvDailyForecast.setLayoutManager(new LinearLayoutManager(this));
-        rvDailyForecast.setNestedScrollingEnabled(false);
-        rvDailyForecast.setAdapter(dailyForecastAdapter);
-
-        btnSearch.setOnClickListener(v -> requestWeather());
         btnMyLocation.setOnClickListener(v -> requestWeatherByCurrentLocation());
     }
 
+    /** Initialises the FusedLocationProviderClient and the permission-request launcher. */
     private void initLocation() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         locationPermissionLauncher = registerForActivityResult(
@@ -116,15 +177,16 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    /** Sets up LiveData observers on the ViewModel. */
     private void setupViewModel() {
         weatherViewModel = new ViewModelProvider(this).get(WeatherViewModel.class);
 
         weatherViewModel.getWeatherLiveData().observe(this, this::bindWeatherData);
         weatherViewModel.getHourlyForecastLiveData().observe(this, hourlyItems ->
-                hourlyForecastAdapter.submitItems(hourlyItems)
+                hourlyForecastWidget.setForecastData(hourlyItems, false)
         );
         weatherViewModel.getDailyForecastLiveData().observe(this, dailyItems ->
-                dailyForecastAdapter.submitItems(dailyItems)
+                dailyForecastWidget.setForecastData(dailyItems, true)
         );
         weatherViewModel.getErrorLiveData().observe(this, errorMessage -> {
             if (errorMessage != null && !errorMessage.trim().isEmpty()) {
@@ -134,11 +196,9 @@ public class MainActivity extends AppCompatActivity {
         weatherViewModel.getLoadingLiveData().observe(this, isLoading ->
                 progressBar.setVisibility(Boolean.TRUE.equals(isLoading) ? View.VISIBLE : View.GONE)
         );
-        weatherViewModel.getRawJsonLiveData().observe(this, rawJson ->
-                tvRawJson.setText(rawJson)
-        );
     }
 
+    /** Triggers a weather search when the user presses the IME Search / Enter key. */
     private void setupSearchAction() {
         etCityName.setOnEditorActionListener((TextView v, int actionId, KeyEvent event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
@@ -150,6 +210,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // -------------------------------------------------------------------------
+    // Weather requests
+    // -------------------------------------------------------------------------
+
+    /** Fetches weather for the city name typed in {@link #etCityName}. */
     private void requestWeather() {
         String city = etCityName.getText().toString().trim();
         if (city.isEmpty()) {
@@ -159,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
         weatherViewModel.fetchWeather(city);
     }
 
+    /** Requests weather for the device's current GPS location. Asks for permission if needed. */
     private void requestWeatherByCurrentLocation() {
         if (hasLocationPermission()) {
             requestLastLocation();
@@ -170,11 +236,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /** Returns {@code true} if the app has at least coarse location permission. */
     private boolean hasLocationPermission() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
+    /** Gets the last known device location and triggers a weather fetch by coordinates. */
     private void requestLastLocation() {
         if (!hasLocationPermission()) {
             Toast.makeText(this, getString(R.string.error_location_permission_denied), Toast.LENGTH_LONG).show();
@@ -194,23 +262,68 @@ public class MainActivity extends AppCompatActivity {
                 );
     }
 
-    private void bindWeatherData(CurrentWeatherModel weatherResponse) {
-        if (weatherResponse == null) {
-            return;
-        }
+    // -------------------------------------------------------------------------
+    // Data binding
+    // -------------------------------------------------------------------------
 
-        tvCityName.setText(weatherResponse.getCityName());
-        tvTemperature.setText(getString(R.string.temperature_format, weatherResponse.getTemperature()));
-        tvHumidity.setText(getString(R.string.humidity_format, weatherResponse.getHumidity()));
-        tvWindSpeed.setText(getString(R.string.wind_speed_format, weatherResponse.getWindSpeed()));
-        tvFeelsLike.setText(getString(R.string.feels_like_format, weatherResponse.getFeelsLike()));
-        tvUvi.setText(getString(R.string.uvi_format, weatherResponse.getUvi()));
-        tvPressure.setText(getString(R.string.pressure_format, weatherResponse.getPressure()));
-        tvVisibility.setText(getString(R.string.visibility_format, weatherResponse.getVisibility()));
-        tvWeatherStatus.setText(weatherResponse.getWeatherStatus());
-        loadWeatherIcon(weatherResponse.getIcon());
+    /**
+     * Populates all UI elements with data from the given {@link CurrentWeatherModel}.
+     *
+     * @param weather the latest weather data; does nothing if {@code null}.
+     */
+    private void bindWeatherData(CurrentWeatherModel weather) {
+        if (weather == null) return;
+
+        // --- Summary section ---
+        tvCityName.setText(weather.getCityName());
+        tvTemperature.setText(String.valueOf(Math.round(weather.getTemperature())));
+        tvWeatherStatus.setText(weather.getWeatherStatus());
+        loadWeatherIcon(weather.getIcon());
+        tvFeelsLike.setText("Feels like " + Math.round(weather.getFeelsLike()) + "°");
+        tvMinMax.setText("Night: " + Math.round(weather.getMinTemp()) + "° • Day: " + Math.round(weather.getMaxTemp()) + "°");
+
+        // --- Detail tiles ---
+        tvPrecipitationVal.setText(String.format(Locale.getDefault(), "%.1f", weather.getPrecipitation()));
+
+        tvWindVal.setText(String.format(Locale.getDefault(), "%.1f km/h", weather.getWindSpeed() * 3.6));
+        tvWindDesc.setText(String.format(Locale.getDefault(), "Gusts: %.1f km/h", weather.getWindGust() * 3.6));
+
+        tvAqiVal.setText(String.valueOf(weather.getAqi()));
+        tvAqiDesc.setText(getAqiDescription(weather.getAqi()));
+
+        tvHumidityVal.setText(weather.getHumidity() + "%");
+        tvDewPoint.setText(String.format(Locale.getDefault(), "Dew point: %d°", Math.round(weather.getDewPoint())));
+
+        tvUviVal.setText(String.valueOf(Math.round(weather.getUvi())));
+        tvUviDesc.setText(getUviDescription(weather.getUvi()));
+
+        tvVisibilityVal.setText(String.format(Locale.getDefault(), "%.1f km", weather.getVisibility() / 1000f));
+        tvVisibilityDesc.setText(weather.getVisibility() >= 10000 ? "Clear" : "Haze");
+
+        tvPressureVal.setText(String.valueOf(weather.getPressure()));
+
+        // --- Sun & Moon tiles ---
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        tvSunRise.setText(timeFormat.format(new Date(weather.getSunrise() * 1000L)));
+        tvSunSet.setText(timeFormat.format(new Date(weather.getSunset() * 1000L)));
+        tvMoonRise.setText(timeFormat.format(new Date(weather.getMoonrise() * 1000L)));
+        tvMoonSet.setText(timeFormat.format(new Date(weather.getMoonset() * 1000L)));
+
+        // --- Compass widget ---
+        if (compassBackgroundView != null) {
+            compassBackgroundView.setWindDeg(weather.getWindDeg());
+        }
     }
 
+    // -------------------------------------------------------------------------
+    // Helper methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * Loads a weather icon from OpenWeatherMap CDN into {@link #ivWeatherIcon}.
+     *
+     * @param iconCode the icon code returned by the API (e.g. {@code "01d"}).
+     */
     private void loadWeatherIcon(String iconCode) {
         if (iconCode == null || iconCode.trim().isEmpty()) {
             ivWeatherIcon.setImageDrawable(null);
@@ -220,5 +333,52 @@ public class MainActivity extends AppCompatActivity {
         Glide.with(this)
                 .load(iconUrl)
                 .into(ivWeatherIcon);
+    }
+
+    /**
+     * Maps an AQI index (1–5, as defined by OpenWeatherMap) to a human-readable label.
+     *
+     * @param aqi Air Quality Index value from the API.
+     * @return a descriptive string such as "Good" or "Very Poor".
+     */
+    private static String getAqiDescription(int aqi) {
+        switch (aqi) {
+            case 2: return "Fair";
+            case 3: return "Moderate";
+            case 4: return "Poor";
+            case 5: return "Very Poor";
+            default: return "Good";
+        }
+    }
+
+    /**
+     * Maps a UV index value to a WHO risk-level label.
+     *
+     * @param uvi UV index from the API.
+     * @return a descriptive string such as "Low" or "Extreme".
+     */
+    private static String getUviDescription(double uvi) {
+        if (uvi >= 11) return "Extreme";
+        if (uvi >= 8)  return "Very High";
+        if (uvi >= 6)  return "High";
+        if (uvi >= 3)  return "Moderate";
+        return "Low";
+    }
+
+    /**
+     * Maps a moon-phase value (0–1, as defined by OpenWeatherMap) to a phase name.
+     *
+     * @param moonPhase fractional illumination value where 0 and 1 represent New Moon.
+     * @return the name of the current moon phase.
+     */
+    private static String getMoonPhaseDescription(double moonPhase) {
+        if (moonPhase > 0 && moonPhase < 0.25)  return "Waxing crescent";
+        if (moonPhase == 0.25)                   return "First quarter moon";
+        if (moonPhase > 0.25 && moonPhase < 0.5) return "Waxing gibbous";
+        if (moonPhase == 0.5)                    return "Full moon";
+        if (moonPhase > 0.5 && moonPhase < 0.75) return "Waning gibbous";
+        if (moonPhase == 0.75)                   return "Last quarter moon";
+        if (moonPhase > 0.75 && moonPhase < 1.0) return "Waning crescent";
+        return "New moon";
     }
 }

@@ -1,0 +1,8 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp" android:height="120dp"
+    android:viewportWidth="120" android:viewportHeight="120">
+    <!-- Starburst/Scalloped path approximated -->
+    <path
+        android:fillColor="@color/weather_widget_bg"
+        android:pathData="M 60 5 C 68 5, 72 12, 77 15 C 84 18, 93 15, 98 22 C 103 29, 98 37, 102 43 C 107 49, 115 52, 115 60 C 115 68, 107 71, 102 77 C 98 83, 103 91, 98 98 C 93 105, 84 102, 77 105 C 72 108, 68 115, 60 115 C 52 115, 48 108, 43 105 C 36 102, 27 105, 22 98 C 17 91, 22 83, 18 77 C 13 71, 5 68, 5 60 C 5 52, 13 49, 18 43 C 22 37, 17 29, 22 22 C 27 15, 36 18, 43 15 C 48 12, 52 5, 60 5 Z" />
+</vector>
